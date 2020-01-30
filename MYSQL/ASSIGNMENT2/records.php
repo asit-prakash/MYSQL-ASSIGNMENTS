@@ -77,7 +77,7 @@
 				echo "Please enter data in correct format" . "<br>";
 			}
 
-			$table1="SELECT * FROM EMPLOYEE_CODE_TABLE";
+			/*$table1="SELECT * FROM EMPLOYEE_CODE_TABLE";
 			$table2="SELECT * FROM EMPLOYEE_DETAILS_TABLE";
 			$table3="SELECT * FROM EMPLOYEE_SALARY_TABLE";
 
@@ -126,6 +126,6 @@
 			show_table($table2);
 			echo "<br>";
 			show_table($table3);
-			echo "<br>";
+			echo "<br>";*/
 		 }
 	?>
