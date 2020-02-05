@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h3>
+            <pre>
+            TABLE:VENUE_DETAILS
+            CREATE TABLE VENUE_DETAILS(
+            VID VARCHAR(10) PRIMARY KEY,
+            VENUE_NAME VARCHAR(10) NOT NULL,
+            VENUE_CITY VARCHAR(10) NOT NULL);
+            
+            +------------+-------------+------+-----+---------+-------+
+            | Field      | Type        | Null | Key | Default | Extra |
+            +------------+-------------+------+-----+---------+-------+
+            | VID        | varchar(10) | NO   | PRI | NULL    |       |
+            | VENUE_NAME | varchar(10) | NO   |     | NULL    |       |
+            | VENUE_CITY | varchar(10) | NO   |     | NULL    |       |
+            +------------+-------------+------+-----+---------+-------+
+
+            TABLE:TEAM_DETAILS
+            CREATE TABLE TEAM_DETAILS(
+            TEAM_ID VARCHAR(10) PRIMARY KEY,
+            TEAM_NAME VARCHAR(10) NOT NULL,
+            CAPTAIN VARCHAR(10) NOT NULL);
+            
+            +-----------+-------------+------+-----+---------+-------+
+            | Field     | Type        | Null | Key | Default | Extra |
+            +-----------+-------------+------+-----+---------+-------+
+            | TEAM_ID   | varchar(10) | NO   | PRI | NULL    |       |
+            | TEAM_NAME | varchar(10) | NO   |     | NULL    |       |
+            | CAPTAIN   | varchar(10) | NO   |     | NULL    |       |
+            +-----------+-------------+------+-----+---------+-------+
+
+            TABLE:MATCH_DETAILS
+            CREATE TABLE MATCH_DETAILS(
+            MATCH_ID VARCHAR(10) PRIMARY KEY,
+            DATE_OF_MATCH DATETIME NOT NULL, 
+            VID VARCHAR(10) NOT NULL, FOREIGN KEY(VID) REFERENCES VENUE_DETAILS(VID),
+            T1_ID VARCHAR(10) NOT NULL, FOREIGN KEY(T1_ID) REFERENCES TEAM_DETAILS(TEAM_ID), 
+            T2_ID VARCHAR(10) NOT NULL, FOREIGN KEY(T2_ID) REFERENCES TEAM_DETAILS(TEAM_ID));
+            
+            +---------------+-------------+------+-----+---------+-------+
+            | Field         | Type        | Null | Key | Default | Extra |
+            +---------------+-------------+------+-----+---------+-------+
+            | MATCH_ID      | varchar(10) | NO   | PRI | NULL    |       |
+            | DATE_OF_MATCH | datetime    | NO   |     | NULL    |       |
+            | VID           | varchar(10) | NO   | MUL | NULL    |       |
+            | T1_ID         | varchar(10) | NO   | MUL | NULL    |       |
+            | T2_ID         | varchar(10) | NO   | MUL | NULL    |       |
+            +---------------+-------------+------+-----+---------+-------+
+
+            TABLE:WIN_DETAILS
+            CREATE TABLE WIN_DETAILS
+            MATCH_ID VARCHAR(10) NOT NULL, FOREIGN KEY(MATCH_ID) REFERENCES MATCH_DETAILS(MATCH_ID),
+            TOSS_WON_TID VARCHAR(10) NOT NULL, FOREIGN KEY(TOSS_WON_TID) REFERENCES TEAM_DETAILS(TEAM_ID),
+            MATCH_WON_TID VARCHAR(10) NOT NULL, FOREIGN KEY(MATCH_WON_TID) REFERENCES TEAM_DETAILS(TEAM_ID));
+            
+            +---------------+-------------+------+-----+---------+-------+
+            | Field         | Type        | Null | Key | Default | Extra |
+            +---------------+-------------+------+-----+---------+-------+
+            | MATCH_ID      | varchar(10) | NO   | MUL | NULL    |       |
+            | TOSS_WON_TID  | varchar(10) | NO   | MUL | NULL    |       |
+            | MATCH_WON_TID | varchar(10) | NO   | MUL | NULL    |       |
+            +---------------+-------------+------+-----+---------+-------+
+
+
+            EXPLANATION OF THE PROPOSED DATABASE STRUCTURE:
+
+            1.)THERE ARE TOTAL 4 TABLES IN THIS DATABASE STRUCTURE.
+            2.)table 1 contain all details about venue i.e. venue id,name,city.
+            3.)table 2 contain all details about team i.e. team id,name,captain.
+            4.)table 3 contain details about match to be played between two teams i.e. venue id,match id,date of match,team1 id,team2 id.
+            5.)table 4 contain details about match results i.e. match id,team id of toss winning team,team id of match winning team.
+
+            6.)The structure is constructed in this way that using foreign keys we can extract details of different entitis.
+            7.)using match id one can know about winning team team id,
+            8.)then using team id in team details table one can know team name,team captain
+            9.)using venue id in venu details table we can know about venue details like venue name,city.
+        </h3>
+    </pre>
+    </body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <pre>
+            <h2>
+        QUERIES:
+
+        1.) SELECT EMPLOYEE_FIRST_NAME,EMPLOYEE_SALARY
+            FROM EMPLOYEE_DETAILS_TABLE D,
+            EMPLOYEE_SALARY_TABLE S WHERE
+            D.EMPLOYEE_ID=S.EMPLOYEE_ID AND
+            EMPLOYEE_SALARY>50000;
+        
+        2.) SELECT EMPLOYEE_LAST_NAME FROM
+            EMPLOYEE_DETAILS_TABLE WHERE
+            GRADUATION_PERCENTILE>70;
+        
+        3.) SELECT ECT.EMPLOYEE_CODE_NAME FROM EMPLOYEE_CODE_TABLE ECT WHERE ECT.EMPLOYEE_CODE IN(
+            SELECT EST.EMPLOYEE_CODE FROM EMPLOYEE_SALARY_TABLE EST WHERE EST.EMPLOYEE_ID IN (
+            SELECT EDT.EMPLOYEE_ID FROM EMPLOYEE_DETAILS_TABLE EDT WHERE EDT.GRADUATION_PERCENTILE<70));
+        
+        4.) SELECT CONCAT(EMPLOYEE_FIRST_NAME,' ',EMPLOYEE_LAST_NAME) FROM EMPLOYEE_DETAILS_TABLE EDT WHERE
+            EDT.EMPLOYEE_ID IN (SELECT EST.EMPLOYEE_ID FROM EMPLOYEE_SALARY_TABLE EST WHERE EST.EMPLOYEE_CODE IN (
+            SELECT ECT.EMPLOYEE_CODE FROM EMPLOYEE_CODE_TABLE ECT WHERE ECT.EMPLOYEE_DOMAIN!='JAVA'));
+        
+        5.) SELECT ECT.EMPLOYEE_DOMAIN, SUM(EST.EMPLOYEE_SALARY) FROM  
+            EMPLOYEE_CODE_TABLE ECT JOIN EMPLOYEE_SALARY_TABLE EST
+            ON EST.EMPLOYEE_CODE=ECT.EMPLOYEE_CODE
+            GROUP BY ECT.EMPLOYEE_DOMAIN;
+        
+        6.) SELECT ECT.EMPLOYEE_DOMAIN, SUM(EST.EMPLOYEE_SALARY) FROM  
+            EMPLOYEE_CODE_TABLE ECT JOIN EMPLOYEE_SALARY_TABLE EST
+            ON EST.EMPLOYEE_CODE=ECT.EMPLOYEE_CODE
+            WHERE EST.EMPLOYEE_SALARY>30000
+            GROUP BY ECT.EMPLOYEE_DOMAIN;
+        
+        7.) SELECT EMPLOYEE_ID FROM EMPLOYEE_SALARY_TABLE WHERE EMPLOYEE_CODE IS NULL;
+        
+        CREATE TABLE EMPLOYEE_CODE_TABLE( 
+        EMPLOYEE_CODE_NAME VARCHAR(10) PRIMARY KEY,
+        EMPLOYEE_CODE VARCHAR(10) NOT NULL,
+        EMPLOYEE_DOMAIN VARCHAR(10) NOT NULL);
+        
+        TABLE:EMPLOYEE_CODE_TABLE                                                                                                                  +--------------------+-------------+------+-----+---------+-------+
+        | Field              | Type        | Null | Key | Default | Extra |
+        +--------------------+-------------+------+-----+---------+-------+
+        | EMPLOYEE_CODE_NAME | varchar(10) | NO   | PRI | NULL    |       |
+        | EMPLOYEE_CODE      | varchar(10) | NO   |     | NULL    |       |
+        | EMPLOYEE_DOMAIN    | varchar(10) | NO   |     | NULL    |       |
+        +--------------------+-------------+------+-----+---------+-------+
+        
+        CREATE TABLE EMPLOYEE_DETAILS_TABLE(
+        EMPLOYEE_ID INT AUTO_INCREMENT PRIMARY KEY,
+        EMPLOYEE_FIRST_NAME VARCHAR(10) NOT NULL,
+        EMPLOYEE_LAST_NAME VARCHAR(10) NOT NULL,
+        GRADUATION_PERCENTILE VARCHAR(10) NOT NULL);
+        
+        TABLE:EMPLOYEE_DETAILS_TABLE
+        +-----------------------+-------------+------+-----+---------+----------------+
+        | Field                 | Type        | Null | Key | Default | Extra          |
+        +-----------------------+-------------+------+-----+---------+----------------+
+        | EMPLOYEE_ID           | int(11)     | NO   | PRI | NULL    | auto_increment |
+        | EMPLOYEE_FIRST_NAME   | varchar(10) | NO   |     | NULL    |                |
+        | EMPLOYEE_LAST_NAME    | varchar(10) | NO   |     | NULL    |                |
+        | GRADUATION_PERCENTILE | varchar(10) | NO   |     | NULL    |                |
+        +-----------------------+-------------+------+-----+---------+----------------+
+        
+        CREATE TABLE EMPLOYEE_SALARY_TABLE( 
+        EMPLOYEE_ID INT,CONSTRAINT EID FOREIGN KEY (EMPLOYEE_ID) 
+        REFERENCES EMPLOYEE_DETAILS_TABLE(EMPLOYEE_ID), 
+        EMPLOYEE_SALARY INT NOT NULL, 
+        EMPLOYEE_CODE VARCHAR(10) NOT NULL, 
+        EMPLOYEE_CODE_NAME VARCHAR(10),CONSTRAINT ECN FOREIGN KEY (EMPLOYEE_CODE_NAME) 
+        REFERENCES EMPLOYEE_CODE_TABLE(EMPLOYEE_CODE_NAME));
+        
+        TABLE:EMPLOYEE_SALARY_TABLE
+        +--------------------+-------------+------+-----+---------+-------+
+        | Field              | Type        | Null | Key | Default | Extra |
+        +--------------------+-------------+------+-----+---------+-------+
+        | EMPLOYEE_ID        | int(11)     | NO   | MUL | NULL    |       |
+        | EMPLOYEE_SALARY    | int(11)     | NO   |     | NULL    |       |
+        | EMPLOYEE_CODE      | varchar(10) | NO   |     | NULL    |       |
+        | EMPLOYEE_CODE_NAME | varchar(10) | NO   | MUL | NULL    |       |
+        +--------------------+-------------+------+-----+---------+-------+
+        
+        CREATE TABLE EMPLOYEE_ID_CODE_TABLE(
+        EMPLOYEE_ID_CODE VARCHAR(20),
+        EMPLOYEE_ID INT,CONSTRAINT EID1 FOREIGN KEY (EMPLOYEE_ID) 
+        REFERENCES EMPLOYEE_DETAILS_TABLE(EMPLOYEE_ID));
+        
+        TABLE:EMPLOYEE_ID_CODE_TABLE
+        +------------------+-------------+------+-----+---------+-------+
+        | Field            | Type        | Null | Key | Default | Extra |
+        +------------------+-------------+------+-----+---------+-------+
+        | EMPLOYEE_ID_CODE | varchar(20) | NO   | MUL | NULL    |       |
+        +------------------+-------------+------+-----+---------+-------+
+    </h2>
+    </pre>
+    </body>
+</html>
+
+

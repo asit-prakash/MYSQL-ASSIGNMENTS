@@ -29,7 +29,9 @@
 		type="text"
 		placeholder="Enter Codename"
 		name="codename"
-		id="codename">
+		id="codename"
+		required>
+		<span class="error">* <?php echo $codenameErr;?></span>
 	<br><br>
 	Enter Domain:
 	<input
@@ -65,8 +67,6 @@
 		value="SUBMIT"
 		id="submit">
 	</form>
-	<?php include 'records.php';?>
-	
 </body>
 </html>
 
